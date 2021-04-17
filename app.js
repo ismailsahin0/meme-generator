@@ -21,27 +21,15 @@ app.get('/', (req, res) => {
 
 
 app.post('/input', (req, res) => {
-  https://api.memegen.link/images/custom/deneme/ismail.png?background=http://www.gstatic.com/webp/gallery/1.png
-  var config = {
-    method: 'get',
-    url: ' https://api.memegen.link/images/custom/' + req.body.top + '/' + req.body.bottom + '.png?background=' + req.body.imageUrl + '',
-    responseType: 'stream'
-  };
+  var link = 'https://api.memegen.link/images/custom/'+req.body.top+'/'+req.body.bottom+'.png?background='+req.body.imageUrl;
+  var response = {
+    status  : 200,
+    success : 'Updated Successfully',
+    url : link
+  }
 
-  axios(config)
-    .then(function (response) {
-      //console.log(JSON.stringify(response.data));
-      stream = response.data.pipe(fs.createWriteStream("./public/result.jpg"));
-      stream.on('finish', function(){res.redirect('/result');});
-      
-    })
-    .catch(function (error) {
-      console.log(error);
-      res.redirect('/error');
-    });
-
-  //generateMeme(req.body.top, req.body.bottom, req.body.imageUrl);
-  //res.redirect('/result');
+  res.end(JSON.stringify(response));
+  return response;
 });
 
 app.get('/result', (req, res) => {
@@ -55,24 +43,3 @@ app.get('/error', (req, res) => {
     root: __dirname
   });
 });
-
-
-
-function generateMeme(top, bottom, imageUrl) {
-  var config = {
-    method: 'post',
-    url: 'https://meme.as-a-service.dev/?top=' + top + '&bottom=' + bottom + '&image=' + imageUrl + '',
-    responseType: 'stream'
-  };
-
-  axios(config)
-    .then(async function (response) {
-      //console.log(JSON.stringify(response.data));
-      var file = response.data.pipe(fs.createWriteStream("./public/result.jpg"));
-      return file;
-    })
-    .catch(function (error) {
-      console.log(error);
-    });
-
-}
