@@ -9,7 +9,7 @@ app.use(express.static(__dirname + '/public'));
 app.use(bodyParser.urlencoded({
   extended: true
 }));
-const port = 3000;
+const port = 8080;
 app.listen(port, () => console.log(`listening on port ${port}!`));
 
 // Serve HTML
