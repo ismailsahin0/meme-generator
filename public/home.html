@@ -62,6 +62,10 @@
             $('#buttonSave').on('click',function(){
 
                 var request;
+                if($('#imageUrl').val()==''){
+                    alert("Image Url is required!");
+                    return;
+                }
                 request = $.ajax({
                     url: "/input",
                     type: "post",
